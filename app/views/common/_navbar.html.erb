@@ -3,9 +3,23 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="/">job-listing</a>
     </div>
-    <ul class="nav navbar-nav">
-      <li><%= link_to("注册") %></li>
-      <li><%= link_to("登录") %></li>
-    </ul>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav pull-right">
+        <% if !current_user %>
+          <li><%= link_to("注册", new_user_registration_path) %></li>
+          <li><%= link_to("登录", new_user_session_path) %></li>
+        <% else %>
+            <li class="dropdown">
+              <a class="dropdown-toggle" type="button" data-toggle="dropdown">
+                hi! <%= current_user.email %><span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to("退出", destroy_user_session_path, method: :delete) %></li>
+              </ul>
+            </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 </nav>
