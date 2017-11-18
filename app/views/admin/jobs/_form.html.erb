@@ -1,11 +1,9 @@
-<%= simple_form_for @job do |t| %>
-  <div class="form-group">
+<%= simple_form_for [:admin, @job] do |t| %>
     <%= t.input :title, input_html: { class: "form-control"} %>
     <%= t.input :description, input_html: { class: "form-control"} %>
     <%= t.input :wage_upper_bound, input_html: { class: "form-control"} %>
     <%= t.input :wage_lower_bound, input_html: { class: "form-control"} %>
     <%= t.input :contact_email, input_html: { class: "form-control"} %>
-  </div>
-
-  <%= t.submit "submit", :class => "btn btn-default", :disabled_with => "submiting" %>
+    <%= t.input :is_hidden, as: :select %>
+    <%= t.button :submit, "submit" %>
 <% end %>
