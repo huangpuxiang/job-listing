@@ -2,9 +2,15 @@ class JobsController < ApplicationController
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
 
   def index
-    @jobs = Job.where(is_hidden: false).order("wage_lower_bound DESC")
-    @jobs = Job.where(is_hidden: false).order("wage_upper_bound DESC")
-    @jobs = Job.where(is_hidden: false).order("updated_at DESC")
+    case params[:order]
+
+    when "by_lower_bound" then
+      @jobs = Job.where(is_hidden: false).order("wage_lower_bound DESC")
+    when "by_upper_bound" then
+      @jobs = Job.where(is_hidden: false).order("wage_upper_bound DESC")
+    else
+      @jobs = Job.where(is_hidden: false).order("updated_at DESC")
+    end 
   end
 
   def show
@@ -54,5 +60,4 @@ class JobsController < ApplicationController
   def job_params
     params.require(:job).permit(:title, :description, :wage_upper_bound, :wage_lower_bound, :contact_email, :is_hidden)
   end
-
 end
